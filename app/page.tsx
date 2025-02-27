@@ -14,7 +14,7 @@ export default function Home() {
           </div>
           <div className="flex lg:flex-1 justify-end">
             <Image
-              src="/logo.png"
+              src="/placeholder-logo1.png"
               alt="Aleri Group Logo"
               width={150}
               height={40}
