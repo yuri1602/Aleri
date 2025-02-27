@@ -7,23 +7,6 @@ import Image from "next/image"
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 lg:px-8">
-          <div className="flex lg:flex-1">
-            {/* ... existing code ... */}
-          </div>
-          <div className="flex lg:flex-1 justify-end">
-            <Image
-              src="/placeholder-logo1.png"
-              alt="Aleri Group Logo"
-              width={150}
-              height={40}
-              className="h-10 w-auto"
-            />
-          </div>
-        </nav>
-      </header>
-
       <SiteHeader />
 
       {/* Hero Section */}
