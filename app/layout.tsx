@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: "Aleri Group - IT Solutions & Software Development",
   description: "Professional IT services, software development, and business solutions provider.",
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/placeholder-logo1.png',
+    apple: '/placeholder-logo1.png',
   },
 }
 
