@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,17 +23,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with email service (SendGrid, Resend, Nodemailer, etc.)
-    // For now, we'll log the message and return success
-    console.log('New contact form submission:', {
-      name,
-      email,
-      subject,
-      message,
-      timestamp: new Date().toISOString(),
+    console.log("Debug: SMTP_USER =", process.env.SMTP_USER);
+    console.log("Debug: SMTP_PASSWORD is set =", !!process.env.SMTP_PASSWORD);
+
+    // Configure Nodemailer for Gmail
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
     });
 
-    // Placeholder response
+    const mailOptions = {
+      from: process.env.SMTP_FROM_EMAIL, // Sender address
+      to: process.env.SMTP_FROM_EMAIL,   // Receive it yourself
+      replyTo: email,                   // Reply to the user's email
+      subject: `New Contact Form Submission: ${subject}`,
+      text: `
+        Name: ${name}
+        Email: ${email}
+        Subject: ${subject}
+        Message:
+        ${message}
+      `,
+      html: `
+        <h3>New Contact Form Submission</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
     return NextResponse.json(
       { success: true, message: 'Email sent successfully' },
       { status: 200 }
